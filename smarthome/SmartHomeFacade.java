@@ -14,71 +14,104 @@ public class SmartHomeFacade {
             SmartLockSystem locks,
             EnergyManagementSystem energy) {
 
-        this.lighting = requireNonNull(lighting, "lighting");
-        this.climate = requireNonNull(climate, "climate");
-        this.security = requireNonNull(security, "security");
-        this.locks = requireNonNull(locks, "locks");
-        this.energy = requireNonNull(energy, "energy");
+        if (lighting == null) {
+            throw new IllegalArgumentException("Lighting must not be null");
+        }
+        if (climate == null) {
+            throw new IllegalArgumentException("Climate must not be null");
+        }
+        if (security == null) {
+            throw new IllegalArgumentException("Security must not be null");
+        }
+        if (locks == null) {
+            throw new IllegalArgumentException("Locks must not be null");
+        }
+        if (energy == null) {
+            throw new IllegalArgumentException("Energy must not be null");
+        }
+
+        this.lighting = lighting;
+        this.climate = climate;
+        this.security = security;
+        this.locks = locks;
+        this.energy = energy;
     }
 
     public void activateHomeMode() {
-        runRoutine("Home mode", () -> {
+        try {
+            System.out.println("\n---Home mode---");
+
             locks.unlockMainEntrance();
             security.disarm();
             energy.enableNormalMode();
             climate.startAt(22);
             lighting.turnOnAll(70);
-        });
-    }
 
-    public void activateAwayMode() {
-        runRoutine("Away mode", () -> {
-            lighting.turnOffAll();
-            climate.stop();
-            energy.enableSavingMode();
-            locks.lockAllEntrances();
-            security.arm();
-        });
-    }
-
-    public void activateNightMode() {
-        runRoutine("Night mode", () -> {
-            lighting.turnOffAll();
-            climate.startAt(19);
-            energy.enableSavingMode();
-            locks.lockAllEntrances();
-            security.arm();
-        });
-    }
-
-    public void activateEnergySavingMode() {
-        runRoutine("Energy-saving mode", () -> {
-            lighting.setBrightness(30);
-            climate.startAt(19);
-            energy.enableSavingMode();
-        });
-    }
-
-    private void runRoutine(String routineName, Runnable routine) {
-        try {
-            System.out.println("\n---" + routineName + "---");
-            routine.run();
-            System.out.println(routineName + " activated successfully");
+            System.out.println("Home mode activated successfully");
         } catch (IllegalArgumentException exception) {
             throw new IllegalStateException(
-                    "Could not activate " + routineName + ": "
+                    "Could not activate Home mode: "
                             + exception.getMessage(),
                     exception
             );
         }
     }
 
-    private static <T> T requireNonNull(T value, String name) {
-        if (value == null) {
-            throw new IllegalArgumentException(
-                    name + " subsystem must not be null"
+    public void activateAwayMode() {
+        try {
+            System.out.println("\n---Away mode---");
+
+            lighting.turnOffAll();
+            climate.stop();
+            energy.enableSavingMode();
+            locks.lockAllEntrances();
+            security.arm();
+
+            System.out.println("Away mode activated successfully");
+        } catch (IllegalArgumentException exception) {
+            throw new IllegalStateException(
+                    "Could not activate Away mode: "
+                            + exception.getMessage(),
+                    exception
             );
         }
-        return value;
+    }
+
+    public void activateNightMode() {
+        try {
+            System.out.println("\n---Night mode---");
+
+            lighting.turnOffAll();
+            climate.startAt(19);
+            energy.enableSavingMode();
+            locks.lockAllEntrances();
+            security.arm();
+
+            System.out.println("Night mode activated successfully");
+        } catch (IllegalArgumentException exception) {
+            throw new IllegalStateException(
+                    "Could not activate Night mode: "
+                            + exception.getMessage(),
+                    exception
+            );
+        }
+    }
+
+    public void activateEnergySavingMode() {
+        try {
+            System.out.println("\n---Energy-saving mode---");
+
+            lighting.setBrightness(30);
+            climate.startAt(19);
+            energy.enableSavingMode();
+
+            System.out.println("Energy-saving mode activated successfully");
+        } catch (IllegalArgumentException exception) {
+            throw new IllegalStateException(
+                    "Could not activate Energy-saving mode: "
+                            + exception.getMessage(),
+                    exception
+            );
+        }
     }
 }
