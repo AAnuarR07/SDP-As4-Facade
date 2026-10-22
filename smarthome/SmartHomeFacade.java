@@ -51,8 +51,7 @@ public class SmartHomeFacade {
         } catch (IllegalArgumentException exception) {
             throw new IllegalStateException(
                     "Could not activate Home mode: "
-                            + exception.getMessage(),
-                    exception
+                            + exception.getMessage()
             );
         }
     }
@@ -71,8 +70,7 @@ public class SmartHomeFacade {
         } catch (IllegalArgumentException exception) {
             throw new IllegalStateException(
                     "Could not activate Away mode: "
-                            + exception.getMessage(),
-                    exception
+                            + exception.getMessage()
             );
         }
     }
@@ -91,8 +89,7 @@ public class SmartHomeFacade {
         } catch (IllegalArgumentException exception) {
             throw new IllegalStateException(
                     "Could not activate Night mode: "
-                            + exception.getMessage(),
-                    exception
+                            + exception.getMessage()
             );
         }
     }
@@ -109,8 +106,7 @@ public class SmartHomeFacade {
         } catch (IllegalArgumentException exception) {
             throw new IllegalStateException(
                     "Could not activate Energy-saving mode: "
-                            + exception.getMessage(),
-                    exception
+                            + exception.getMessage()
             );
         }
     }
