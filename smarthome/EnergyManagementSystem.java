@@ -1,7 +1,6 @@
 package smarthome;
 
 public class EnergyManagementSystem {
-
     private boolean savingMode = false;
 
     public void enableSavingMode() {
