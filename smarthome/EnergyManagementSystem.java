@@ -1,23 +1,20 @@
 package smarthome;
 
 public class EnergyManagementSystem {
-    public enum EnergyMode {
-        NORMAL, SAVING
-    }
 
-    private EnergyMode mode = EnergyMode.NORMAL;
+    private boolean savingMode = false;
 
     public void enableSavingMode() {
-        mode = EnergyMode.SAVING;
+        savingMode = true;
         System.out.println("Energy: saving mode ENABLED");
     }
 
     public void enableNormalMode() {
-        mode = EnergyMode.NORMAL;
+        savingMode = false;
         System.out.println("Energy: normal mode ENABLED");
     }
 
-    public EnergyMode getMode() {
-        return mode;
+    public boolean isSavingMode() {
+        return savingMode;
     }
 }
